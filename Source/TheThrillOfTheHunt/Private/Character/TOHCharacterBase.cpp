@@ -32,18 +32,21 @@ UAttributeSet* ATOHCharacterBase::GetAttributeSet() const
 	return AttributeSet;
 }
 
-void ATOHCharacterBase::InitializePrimaryAttributes() const
+void ATOHCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
 {
 	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
 	check(IsValid(ASC));
 	check(DefaultPrimaryAttributes);
 
 	FGameplayEffectContextHandle ContextHandle = ASC->MakeEffectContext();
-	//ContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle SpecHandle =
-		ASC->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.f, ContextHandle);
+		ASC->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 	const FActiveGameplayEffectHandle ActiveEffectHandle =
 		ASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data, ASC);
-
 }
 
+void ATOHCharacterBase::InitializeDefaultAttributes() const
+{
+	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
+	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+}

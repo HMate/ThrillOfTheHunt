@@ -8,12 +8,16 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include <Net/UnrealNetwork.h>
 
+#define IMPLEMENT_TOH_ATTRIBUTE_REPL(Property) \
+	void UTOHAttributeSet::OnRep_##Property(const FGameplayAttributeData& Old##Property) const \
+	{ \
+		GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Property, Old##Property); \
+	}
+
 UTOHAttributeSet::UTOHAttributeSet()
 {
-	InitHealth(50.f);
-	InitMaxHealth(100.f);
-	InitMana(50.f);
-	InitMaxMana(75.f);
+	InitHealth(10.f);
+	InitMana(10.f);
 }
 
 void UTOHAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -26,8 +30,17 @@ void UTOHAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, Health, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, Mana, COND_None, REPNOTIFY_Always);
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, Armor, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, CritHitChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, CritHitDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, CritHitResistance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UTOHAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 }
 
@@ -37,10 +50,6 @@ void UTOHAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribut
 
 	if (Attribute == GetHealthAttribute())
 	{
-		if (NewValue > GetMaxHealth())
-		{
-			int debug = 34;
-		}
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
 	}
 
@@ -107,24 +116,28 @@ void UTOHAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData&
 	}
 }
 
-void UTOHAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
+IMPLEMENT_TOH_ATTRIBUTE_REPL(Strength)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(Intelligence)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(Resilience)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(Vigor)
+
+IMPLEMENT_TOH_ATTRIBUTE_REPL(Armor)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(ArmorPenetration)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(BlockChance)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(CritHitChance)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(CritHitDamage)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(CritHitResistance)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(HealthRegeneration)
+IMPLEMENT_TOH_ATTRIBUTE_REPL(ManaRegeneration)
+
+void UTOHAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Strength, OldStrength);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, MaxHealth, OldMaxHealth);
 }
 
-void UTOHAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
+void UTOHAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Intelligence, OldIntelligence);
-}
-
-void UTOHAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Resilience, OldResilience);
-}
-
-void UTOHAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Vigor, OldVigor);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, MaxMana, OldMaxMana);
 }
 
 void UTOHAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
@@ -132,17 +145,7 @@ void UTOHAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) con
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Health, OldHealth);
 }
 
-void UTOHAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, MaxHealth, OldMaxHealth);
-}
-
 void UTOHAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, Mana, OldMana);
-}
-
-void UTOHAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UTOHAttributeSet, MaxMana, OldMaxMana);
 }

@@ -45,5 +45,5 @@ void ATOHCharacter::InitAbilityActorInfo()
 			TOHHUD->InitOverlay(PlayerController, PState, AbilitySystemComponent, AttributeSet);
 		}
 	}
-	InitializePrimaryAttributes();
+	InitializeDefaultAttributes();
 }
