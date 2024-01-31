@@ -1,10 +1,11 @@
 # Ignore assets to reduce repo size. Download them by hand if needed from - TODO Add different versioncontrol tool to gather assets
-Content/Assets/*
-Content/Assets/**
-Content/Assets/__ExternalActors__
-Content/Assets/__ExternalObjects__
 
+Content/Assets/*
+!Content/Assets/StarterContent/
+Content/Assets/StarterContent/*
+!Content/Assets/StarterContent/Materials/
 !Content/Assets/StarterContent/Materials/*
+
 
 # Visual Studio 2015 user specific files
 .vs/
