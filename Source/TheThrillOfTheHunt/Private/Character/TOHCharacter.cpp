@@ -27,6 +27,13 @@ void ATOHCharacter::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+int32 ATOHCharacter::GetPlayerLevel()
+{
+	const ATOHPlayerState* PState = GetPlayerState<ATOHPlayerState>();
+	check(PState);
+	return PState->GetPlayerLevel();
+}
+
 void ATOHCharacter::InitAbilityActorInfo()
 {
 	ATOHPlayerState* PState = GetPlayerState<ATOHPlayerState>();

@@ -4,6 +4,7 @@ Content/Assets/**
 Content/Assets/__ExternalActors__
 Content/Assets/__ExternalObjects__
 
+!Content/Assets/StarterContent/Materials/*
 
 # Visual Studio 2015 user specific files
 .vs/

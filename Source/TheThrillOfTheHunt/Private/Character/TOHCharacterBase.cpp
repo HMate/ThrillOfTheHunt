@@ -39,6 +39,7 @@ void ATOHCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayE
 	check(DefaultPrimaryAttributes);
 
 	FGameplayEffectContextHandle ContextHandle = ASC->MakeEffectContext();
+	ContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle SpecHandle =
 		ASC->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 	const FActiveGameplayEffectHandle ActiveEffectHandle =

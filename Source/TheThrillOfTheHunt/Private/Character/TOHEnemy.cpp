@@ -16,6 +16,11 @@ ATOHEnemy::ATOHEnemy()
 	AttributeSet = CreateDefaultSubobject<UTOHAttributeSet>("AttributeSet");
 }
 
+int32 ATOHEnemy::GetPlayerLevel()
+{
+	return Level;
+}
+
 void ATOHEnemy::BeginPlay()
 {
 	Super::BeginPlay();

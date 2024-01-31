@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
+
 #include "TOHCharacterBase.generated.h"
 
 class UAbilitySystemComponent;
@@ -12,7 +14,7 @@ class UAttributeSet;
 class UGameplayEffect;
 
 UCLASS(Abstract)
-class THETHRILLOFTHEHUNT_API ATOHCharacterBase : public ACharacter, public IAbilitySystemInterface
+class THETHRILLOFTHEHUNT_API ATOHCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 

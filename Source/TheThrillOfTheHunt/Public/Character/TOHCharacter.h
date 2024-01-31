@@ -15,6 +15,10 @@ public:
 
 	virtual void OnRep_PlayerState() override;
 
+	/** Combar Interface */
+	virtual int32 GetPlayerLevel() override;
+	/** end Combar Interface */
+
 private:
 	virtual void InitAbilityActorInfo() override;
 };
