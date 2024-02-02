@@ -16,8 +16,6 @@
 
 UTOHAttributeSet::UTOHAttributeSet()
 {
-	InitHealth(10.f);
-	InitMana(10.f);
 }
 
 void UTOHAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

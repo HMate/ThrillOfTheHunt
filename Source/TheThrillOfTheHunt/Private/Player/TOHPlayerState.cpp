@@ -5,6 +5,7 @@
 
 #include <AbilitySystem/TOHAbilitySystemComponent.h>
 #include <AbilitySystem/TOHAttributeSet.h>
+#include "AttributeSet.h"
 #include <Net/UnrealNetwork.h>
 
 ATOHPlayerState::ATOHPlayerState()
@@ -37,4 +38,5 @@ UAttributeSet* ATOHPlayerState::GetAttributeSet() const
 
 void ATOHPlayerState::OnRep_Level(int32 OldLevel)
 {
+
 }
