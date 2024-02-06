@@ -5,6 +5,7 @@
 
 #include "UI/Widget/TOHUserWidget.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include <UI/WidgetController/AttributeMenuWidgetController.h>
 
 UOverlayWidgetController* ATOHHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
@@ -15,6 +16,18 @@ UOverlayWidgetController* ATOHHUD::GetOverlayWidgetController(const FWidgetContr
 		OverlayWidgetController->BindCallbacksToDependencies();
 	}
 	return OverlayWidgetController;
+}
+
+UAttributeMenuWidgetController* ATOHHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	checkf(AttributeMenuWidgetControllerClass, TEXT("AttributeMenu Widget Controller Class is uninitialized, please fill out BP_TOHHUD"));
+	if (AttributeMenuWidgetController == nullptr)
+	{
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+		AttributeMenuWidgetController->BindCallbacksToDependencies();
+	}
+	return AttributeMenuWidgetController;
 }
 
 void ATOHHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)

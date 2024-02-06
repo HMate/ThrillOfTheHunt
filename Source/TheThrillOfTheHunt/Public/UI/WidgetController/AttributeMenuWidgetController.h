@@ -6,10 +6,15 @@
 #include "UI/WidgetController/TOHWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
+struct FTOHAttributeInfo;
+class UAttributeInfo;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FTOHAttributeInfo&, Info);
+
 /**
  *
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class THETHRILLOFTHEHUNT_API UAttributeMenuWidgetController : public UTOHWidgetController
 {
 	GENERATED_BODY()
@@ -17,4 +22,11 @@ public:
 	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksToDependencies() override;
 
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
+	FAttributeInfoSignature AttributeInfoDelegate;
+
+protected:
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UAttributeInfo> AttributeInfo;
 };
