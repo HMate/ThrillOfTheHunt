@@ -7,17 +7,20 @@
 #include "AbilitySystem/Data/AttributeInfo.h"
 #include "TOHGameplayTags.h"
 
+void UAttributeMenuWidgetController::BindCallbacksToDependencies()
+{
+}
+
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	const UTOHAttributeSet* AS = CastChecked<UTOHAttributeSet>(AttributeSet);
 
 	check(AttributeInfo);
 
-	FTOHAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(FTOHGameplayTags::Get().Attributes_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
-	AttributeInfoDelegate.Broadcast(Info);
-}
-
-void UAttributeMenuWidgetController::BindCallbacksToDependencies()
-{
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		FTOHAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Pair.Key);
+		Info.AttributeValue = Pair.Value().GetNumericValue(AS);
+		AttributeInfoDelegate.Broadcast(Info);
+	}
 }
