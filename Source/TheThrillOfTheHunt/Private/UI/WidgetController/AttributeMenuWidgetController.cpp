@@ -5,22 +5,39 @@
 
 #include "AbilitySystem/TOHAttributeSet.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
-#include "TOHGameplayTags.h"
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
+	const UTOHAttributeSet* AS = CastChecked<UTOHAttributeSet>(AttributeSet);
+	check(AttributeInfo);
+
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+			[this, Pair](const FOnAttributeChangeData& Data) {
+				BroadcastAttributeInfo(Pair.Key, Pair.Value());
+			}
+		);
+	}
 }
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	const UTOHAttributeSet* AS = CastChecked<UTOHAttributeSet>(AttributeSet);
-
 	check(AttributeInfo);
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{
-		FTOHAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Pair.Key);
-		Info.AttributeValue = Pair.Value().GetNumericValue(AS);
-		AttributeInfoDelegate.Broadcast(Info);
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
 	}
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(
+	const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	const UTOHAttributeSet* AS = CastChecked<UTOHAttributeSet>(AttributeSet);
+
+	FTOHAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	Info.AttributeValue = Attribute.GetNumericValue(AS);
+	AttributeInfoDelegate.Broadcast(Info);
 }
