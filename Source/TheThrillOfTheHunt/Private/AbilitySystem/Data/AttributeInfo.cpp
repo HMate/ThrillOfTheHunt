@@ -14,7 +14,7 @@ FTOHAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& At
 	}
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeIndo [%s]."),
+		UE_LOG(LogTemp, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]."),
 			*AttributeTag.ToString(), *GetNameSafe(this))
 	}
 	return FTOHAttributeInfo();

@@ -4,6 +4,7 @@
 #include "Character/TOHCharacterBase.h"
 
 #include "AbilitySystemComponent.h"
+#include <AbilitySystem/TOHAbilitySystemComponent.h>
 
 
 ATOHCharacterBase::ATOHCharacterBase()
@@ -51,4 +52,13 @@ void ATOHCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void ATOHCharacterBase::AddCharacterAbilities()
+{
+	UTOHAbilitySystemComponent* ASC = CastChecked<UTOHAbilitySystemComponent>(AbilitySystemComponent);
+	if (!HasAuthority())
+		return;
+
+	ASC->AddCharacterAbilities(StartupAbilities);
 }
