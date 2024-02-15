@@ -4,14 +4,39 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
+
 #include "TOHPlayerController.generated.h"
 
+class UTOHInputConfig;
+class UInputMappingContext;
+class UTOHAbilitySystemComponent;
+
 /**
- * 
+ *
  */
 UCLASS()
 class THETHRILLOFTHEHUNT_API ATOHPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	ATOHPlayerController();
+protected:
+	virtual void BeginPlay();
+	virtual void SetupInputComponent();
+private:
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputMappingContext> TOHContext;
+
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UTOHInputConfig> InputConfig;
+
+	UPROPERTY()
+	TObjectPtr<UTOHAbilitySystemComponent> TOHAbilitySystemComponent;
+
+	UTOHAbilitySystemComponent* GetASC();
 };

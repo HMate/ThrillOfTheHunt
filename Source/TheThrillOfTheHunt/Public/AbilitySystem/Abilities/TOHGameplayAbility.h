@@ -7,11 +7,14 @@
 #include "TOHGameplayAbility.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class THETHRILLOFTHEHUNT_API UTOHGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-	
+public:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	FGameplayTag StartupInputTag;
 };
