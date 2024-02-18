@@ -7,6 +7,8 @@
 #include <AbilitySystemBlueprintLibrary.h>
 #include "AbilitySystem/TOHAbilitySystemComponent.h"
 #include "Input/TOHInputComponent.h"
+#include "TOHGameplayTags.h"
+#include <Interaction/EnemyInterface.h>
 
 
 ATOHPlayerController::ATOHPlayerController()
@@ -14,22 +16,35 @@ ATOHPlayerController::ATOHPlayerController()
 	bReplicates = true;
 }
 
+void ATOHPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CursorTrace();
+}
+
 void ATOHPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	check(TOHContext);
 
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(TOHContext, 0);
+	auto LocalPlayer = GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+	// TODO: On clients LocalPlayer is null at this point. But BeginPlay is called twice on client, and by the second time it is set.
+	// If this would be a problem, based on some code exploration, we should set the mapping context in the GameMode postlogin function.
+	if (Subsystem)
+	{
+		check(Subsystem);
+		Subsystem->AddMappingContext(TOHContext, 0);
 
-	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Default;
+		bShowMouseCursor = true;
+		DefaultMouseCursor = EMouseCursor::Default;
 
-	FInputModeGameAndUI InputModeData;
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-	InputModeData.SetHideCursorDuringCapture(false);
-	SetInputMode(InputModeData);
+		FInputModeGameAndUI InputModeData;
+		InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		InputModeData.SetHideCursorDuringCapture(false);
+		SetInputMode(InputModeData);
+	}
 }
 
 void ATOHPlayerController::SetupInputComponent()
@@ -43,9 +58,23 @@ void ATOHPlayerController::SetupInputComponent()
 
 }
 
+void ATOHPlayerController::CursorTrace()
+{
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	if (!Hit.bBlockingHit)
+		return;
+
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(Hit.GetActor());
+}
+
 void ATOHPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(1, 3.0f, FColor::Red, *InputTag.ToString());
+	if (InputTag.MatchesTagExact(FTOHGameplayTags::Get().InputTag_LMB))
+	{
+		bTargeting = ThisActor ? true : false;
+	}
 }
 
 void ATOHPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)

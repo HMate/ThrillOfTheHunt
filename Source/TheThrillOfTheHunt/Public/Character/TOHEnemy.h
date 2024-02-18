@@ -4,22 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Character/TOHCharacterBase.h"
+#include "Interaction/EnemyInterface.h"
 #include "TOHEnemy.generated.h"
 
 /**
  *
  */
 UCLASS()
-class THETHRILLOFTHEHUNT_API ATOHEnemy : public ATOHCharacterBase
+class THETHRILLOFTHEHUNT_API ATOHEnemy : public ATOHCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
 
 public:
 	ATOHEnemy();
 
-	/** Combar Interface */
+	/** Combat Interface */
 	virtual int32 GetPlayerLevel() override;
-	/** end Combar Interface */
+	/** end Combat Interface */
 
 protected:
 	virtual void BeginPlay() override;
