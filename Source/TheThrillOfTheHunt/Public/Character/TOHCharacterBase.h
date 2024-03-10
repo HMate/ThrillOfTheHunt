@@ -30,6 +30,8 @@ protected:
 
 	virtual void InitAbilityActorInfo();
 
+	virtual FVector GetCombatSocketLocation() override;
+
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

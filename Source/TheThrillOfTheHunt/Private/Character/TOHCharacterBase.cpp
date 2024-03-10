@@ -23,6 +23,11 @@ void ATOHCharacterBase::InitAbilityActorInfo()
 {
 }
 
+FVector ATOHCharacterBase::GetCombatSocketLocation()
+{
+	return GetActorLocation();
+}
+
 UAbilitySystemComponent* ATOHCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
