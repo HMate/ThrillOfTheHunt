@@ -14,13 +14,19 @@ void UTOHProjectileSpell::ActivateAbility(
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	const bool bIsServer = HasAuthority(&ActivationInfo);
+
+}
+
+void UTOHProjectileSpell::SpawnProjectile()
+{
+	auto* Avatar = GetAvatarActorFromActorInfo();
+	const bool bIsServer = Avatar->HasAuthority();
 	if (!bIsServer)
 	{
 		return;
 	}
 
-	ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
+	ICombatInterface* CombatInterface = Cast<ICombatInterface>(Avatar);
 	if (CombatInterface)
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
@@ -40,5 +46,4 @@ void UTOHProjectileSpell::ActivateAbility(
 
 		Projectile->FinishSpawning(SpawnTransform);
 	}
-
 }
