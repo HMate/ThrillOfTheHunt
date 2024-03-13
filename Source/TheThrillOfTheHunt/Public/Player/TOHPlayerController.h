@@ -41,6 +41,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UTOHInputConfig> InputConfig;
 
+	bool bShiftKeyDown = false;
+
 	UPROPERTY()
 	TObjectPtr<UTOHAbilitySystemComponent> TOHAbilitySystemComponent;
 

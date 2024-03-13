@@ -50,6 +50,8 @@ void FTOHGameplayTags::InitializeNativeGameplayTags()
 		FName("InputTag.LMB"), FString("Input tag for Left Mouse Button"));
 	GameplayTags.InputTag_RMB = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.RMB"), FString("Input tag for Right Mouse Button"));
+	GameplayTags.InputTag_Shift = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Shift"), FString("Input tag for Shift"));
 	GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.1"), FString("Input tag for 1 key"));
 	GameplayTags.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(

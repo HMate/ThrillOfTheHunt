@@ -75,18 +75,41 @@ void ATOHPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 	{
 		bTargeting = ThisActor ? true : false;
 	}
+
+	if (InputTag.MatchesTagExact(FTOHGameplayTags::Get().InputTag_Shift))
+	{
+		bShiftKeyDown = true;
+	}
 }
 
 void ATOHPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	if (GetASC() == nullptr) return;
+	if (!InputTag.MatchesTagExact(FTOHGameplayTags::Get().InputTag_LMB))
+	{
+		GetASC()->AbilityInputTagReleased(InputTag);
+	}
+
+	if (InputTag.MatchesTagExact(FTOHGameplayTags::Get().InputTag_Shift))
+	{
+		bShiftKeyDown = true;
+	}
+
 	GetASC()->AbilityInputTagReleased(InputTag);
 }
 
 void ATOHPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	if (GetASC() == nullptr) return;
-	GetASC()->AbilityInputTagHeld(InputTag);
+	if (!InputTag.MatchesTagExact(FTOHGameplayTags::Get().InputTag_LMB))
+	{
+		GetASC()->AbilityInputTagHeld(InputTag);
+	}
+
+	if (bTargeting || bShiftKeyDown)
+	{
+		GetASC()->AbilityInputTagHeld(InputTag);
+	}
 }
 
 UTOHAbilitySystemComponent* ATOHPlayerController::GetASC()

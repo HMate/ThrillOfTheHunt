@@ -17,7 +17,7 @@ void UTOHProjectileSpell::ActivateAbility(
 
 }
 
-void UTOHProjectileSpell::SpawnProjectile()
+void UTOHProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
 	auto* Avatar = GetAvatarActorFromActorInfo();
 	const bool bIsServer = Avatar->HasAuthority();
@@ -30,10 +30,12 @@ void UTOHProjectileSpell::SpawnProjectile()
 	if (CombatInterface)
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
+		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+		Rotation.Pitch = 0.0f;
 
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
-		// TODO: Set Projectile Rotation
+		SpawnTransform.SetRotation(Rotation.Quaternion());
 
 		ATOHProjectile* Projectile = GetWorld()->SpawnActorDeferred<ATOHProjectile>(
 			ProjectileClass,

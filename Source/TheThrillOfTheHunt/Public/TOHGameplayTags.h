@@ -39,6 +39,7 @@ public:
 	/* Input Tags */
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
+	FGameplayTag InputTag_Shift;
 	FGameplayTag InputTag_1;
 	FGameplayTag InputTag_2;
 	FGameplayTag InputTag_3;

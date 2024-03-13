@@ -5,12 +5,15 @@
 
 #include "AbilitySystemComponent.h"
 #include <AbilitySystem/TOHAbilitySystemComponent.h>
+#include <Components/CapsuleComponent.h>
 
 
 ATOHCharacterBase::ATOHCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 }
 
 void ATOHCharacterBase::BeginPlay()
