@@ -2,7 +2,9 @@
 
 
 #include "TOHAssetManager.h"
-#include <TOHGameplayTags.h>
+
+#include "TOHGameplayTags.h"
+#include "AbilitySystemGlobals.h"
 
 UTOHAssetManager& UTOHAssetManager::Get()
 {
@@ -17,4 +19,7 @@ void UTOHAssetManager::StartInitialLoading()
 	Super::StartInitialLoading();
 
 	FTOHGameplayTags::InitializeNativeGameplayTags();
+
+	// This is required to use Target Data!
+	UAbilitySystemGlobals::Get().InitGlobalData();
 }
