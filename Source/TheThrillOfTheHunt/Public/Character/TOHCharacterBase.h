@@ -32,6 +32,9 @@ protected:
 
 	virtual FVector GetCombatSocketLocation() override;
 
+	UPROPERTY(EditAnywhere)
+	float ProjectileSpawnDistance = 1.0f;
+
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

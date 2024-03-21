@@ -3,9 +3,9 @@
 
 #include "AbilitySystem/TOHAttributeSet.h"
 
-#include "GameFramework/Character.h"
-#include "GameplayEffectExtension.h"
-#include "AbilitySystemBlueprintLibrary.h"
+#include <GameFramework/Character.h>
+#include <GameplayEffectExtension.h>
+#include <AbilitySystemBlueprintLibrary.h>
 #include <Net/UnrealNetwork.h>
 #include "TOHGameplayTags.h"
 
@@ -97,6 +97,11 @@ void UTOHAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
+
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Changed Health on %s, Healht: %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
+	}
 }
 
 void UTOHAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const

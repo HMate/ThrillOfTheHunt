@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include <AbilitySystem/TOHAbilitySystemComponent.h>
 #include <Components/CapsuleComponent.h>
+#include <TheThrillOfTheHunt/TheThrillOfTheHunt.h>
 
 
 ATOHCharacterBase::ATOHCharacterBase()
@@ -13,7 +14,10 @@ ATOHCharacterBase::ATOHCharacterBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
+	GetMesh()->SetGenerateOverlapEvents(true);
 }
 
 void ATOHCharacterBase::BeginPlay()
@@ -28,7 +32,9 @@ void ATOHCharacterBase::InitAbilityActorInfo()
 
 FVector ATOHCharacterBase::GetCombatSocketLocation()
 {
-	return GetActorLocation();
+	FVector Loc = GetActorLocation();
+	FVector SocketLoc = Loc + GetActorRotation().Vector() * ProjectileSpawnDistance;
+	return SocketLoc;
 }
 
 UAbilitySystemComponent* ATOHCharacterBase::GetAbilitySystemComponent() const

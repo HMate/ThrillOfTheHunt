@@ -5,6 +5,8 @@
 
 #include "Actor/TOHProjectile.h"
 #include <Interaction/CombatInterface.h>
+#include <AbilitySystemComponent.h>
+#include <AbilitySystemBlueprintLibrary.h>
 
 void UTOHProjectileSpell::ActivateAbility(
 	const FGameplayAbilitySpecHandle Handle,
@@ -13,8 +15,6 @@ void UTOHProjectileSpell::ActivateAbility(
 	const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-
-
 }
 
 void UTOHProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
@@ -44,7 +44,11 @@ void UTOHProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocatio
 			Cast<APawn>(GetOwningActorFromActorInfo()),
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
-		// TODO: Give Projectile a Gameplay Effect Spec for causing damage.
+		const UAbilitySystemComponent* SourceASC =
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+		const FGameplayEffectSpecHandle SpecHandle =
+			SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+		Projectile->DamageEffectSpecHandle = SpecHandle;
 
 		Projectile->FinishSpawning(SpawnTransform);
 	}

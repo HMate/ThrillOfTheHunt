@@ -7,6 +7,7 @@
 #include "TOHProjectileSpell.generated.h"
 
 class ATOHProjectile;
+class UGameplayEffect;
 /**
  *
  */
@@ -28,4 +29,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<ATOHProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect> DamageEffectClass;
 };
