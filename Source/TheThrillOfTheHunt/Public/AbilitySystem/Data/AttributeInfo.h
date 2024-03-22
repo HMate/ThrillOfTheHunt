@@ -26,7 +26,7 @@ struct FTOHAttributeInfo
 };
 
 /**
- *
+ * Holds data for attributes to display on attribute menu UI
  */
 UCLASS()
 class THETHRILLOFTHEHUNT_API UAttributeInfo : public UDataAsset

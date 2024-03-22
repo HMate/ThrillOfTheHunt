@@ -9,6 +9,7 @@
 
 UOverlayWidgetController* ATOHHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class is uninitialized, please fill out BP_TOHHUD"));
 	if (OverlayWidgetController == nullptr)
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);

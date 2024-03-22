@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include <CoreMinimal.h>
 #include "UI/WidgetController/TOHWidgetController.h"
 #include <GameplayEffectTypes.h>
 
