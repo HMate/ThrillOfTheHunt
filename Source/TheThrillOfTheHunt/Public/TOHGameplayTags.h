@@ -16,25 +16,24 @@ public:
 	static const FTOHGameplayTags& Get() { return GameplayTags; }
 	static void InitializeNativeGameplayTags();
 
-	/* Primary Attributes */
-	FGameplayTag Attributes_Primary_Strength;
-	FGameplayTag Attributes_Primary_Intelligence;
-	FGameplayTag Attributes_Primary_Resilience;
-	FGameplayTag Attributes_Primary_Vigor;
-	/* Secondary Attributes */
-	FGameplayTag Attributes_Secondary_Armor;
-	FGameplayTag Attributes_Secondary_ArmorPenetration;
-	FGameplayTag Attributes_Secondary_BlockChance;
-	FGameplayTag Attributes_Secondary_CritHitChance;
-	FGameplayTag Attributes_Secondary_CritHitDamage;
-	FGameplayTag Attributes_Secondary_CritHitResistance;
-	FGameplayTag Attributes_Secondary_HealthRegeneration;
-	FGameplayTag Attributes_Secondary_ManaRegeneration;
-	FGameplayTag Attributes_Secondary_MaxHealth;
-	FGameplayTag Attributes_Secondary_MaxMana;
+	/* Offensive Attributes */
+	FGameplayTag Attributes_Offensive_BaseDamage;
+	FGameplayTag Attributes_Offensive_AttackSpeed;
+	FGameplayTag Attributes_Offensive_AttackRange;
+	FGameplayTag Attributes_Offensive_AttackWidth;
+	FGameplayTag Attributes_Offensive_ArmorPenetration;
+	FGameplayTag Attributes_Offensive_CritHitChance;
+	FGameplayTag Attributes_Offensive_CritHitDamage;
+	/* Defensive Attributes */
+	FGameplayTag Attributes_Defensive_MaxHealth;
+	FGameplayTag Attributes_Defensive_Health;
+	FGameplayTag Attributes_Defensive_MoveSpeed;
+	FGameplayTag Attributes_Defensive_DodgeCharges;
+	FGameplayTag Attributes_Defensive_HealthRegeneration;
+	FGameplayTag Attributes_Defensive_Armor;
+	FGameplayTag Attributes_Defensive_BlockChance;
+	FGameplayTag Attributes_Defensive_Evasion;
 	/* Vital Attributes */
-	FGameplayTag Attributes_Vital_Health;
-	FGameplayTag Attributes_Vital_Mana;
 
 	/* Input Tags */
 	FGameplayTag InputTag_LMB;

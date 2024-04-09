@@ -11,8 +11,7 @@ void UOverlayWidgetController::BroadcastInitialValues()
 
 	OnHealthChanged.Broadcast(Attributes->GetHealth());
 	OnMaxHealthChanged.Broadcast(Attributes->GetMaxHealth());
-	OnManaChanged.Broadcast(Attributes->GetMana());
-	OnMaxManaChanged.Broadcast(Attributes->GetMaxMana());
+	OnDodgeChargesChanged.Broadcast(Attributes->GetDodgeCharges());
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -28,15 +27,10 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			{
 				OnMaxHealthChanged.Broadcast(Data.NewValue);
 			});
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attributes->GetManaAttribute())
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attributes->GetDodgeChargesAttribute())
 		.AddLambda([this](const FOnAttributeChangeData& Data)
 			{
-				OnManaChanged.Broadcast(Data.NewValue);
-			});
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attributes->GetMaxManaAttribute())
-		.AddLambda([this](const FOnAttributeChangeData& Data)
-			{
-				OnMaxManaChanged.Broadcast(Data.NewValue);
+				OnDodgeChargesChanged.Broadcast(Data.NewValue);
 			});
 
 	Cast<UTOHAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(

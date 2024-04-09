@@ -20,5 +20,5 @@ public:
 
 private:
 
-	FGameplayEffectAttributeCaptureDefinition VigorDef;
+	//FGameplayEffectAttributeCaptureDefinition VigorDef;
 };
